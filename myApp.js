@@ -7,6 +7,7 @@ var app = express()
 // --> 11)  Mount the body-parser middleware  here
 
 /** 1) Meet the node console. */
+console.log('hello world')
 
 /** 2) A first working Express Server */
 
