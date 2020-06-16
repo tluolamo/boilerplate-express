@@ -1,16 +1,15 @@
-
-var express = require('express')
-var app = express()
+var express = require("express");
+var app = express();
 
 // --> 7)  Mount the Logger middleware here
 app.use((req, res, next) => {
-  console.log(`${req.method} ${req.path} - ${req.ip}`)
-  next()
-})
+  console.log(`${req.method} ${req.path} - ${req.ip}`);
+  next();
+});
 // --> 11)  Mount the body-parser middleware  here
 
 /** 1) Meet the node console. */
-console.log('hello world')
+console.log("hello world");
 
 /** 2) A first working Express Server */
 /* app.get('/', (req, res) => {
@@ -18,21 +17,21 @@ console.log('hello world')
 }) */
 
 /** 3) Serve an HTML file */
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/views/index.html')
-})
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/views/index.html");
+});
 
 /** 4) Serve static assets  */
-app.use(express.static(__dirname + '/public'))
+app.use(express.static(__dirname + "/public"));
 
 /** 5) serve JSON on a specific route */
-app.get('/json', (req, res) => {
-  let message = 'Hello json'
-  if (process.env.MESSAGE_STYLE === 'uppercase') {
-    message = message.toUpperCase()
+app.get("/json", (req, res) => {
+  let message = "Hello json";
+  if (process.env.MESSAGE_STYLE === "uppercase") {
+    message = message.toUpperCase();
   }
-  res.json({ message })
-})
+  res.json({ message });
+});
 
 /** 6) Use the .env file to configure the app */
 
@@ -40,6 +39,16 @@ app.get('/json', (req, res) => {
 //  place it before all the routes !
 
 /** 8) Chaining middleware. A Time server */
+app.get(
+  "/now",
+  function(req, res, next) {
+    req.time = new Date().toString(); // Hypothetical synchronous operation
+    next();
+  },
+  function(req, res) {
+    res.json({time: req.time});
+  }
+);
 
 /** 9)  Get input from client - Route parameters */
 
@@ -57,4 +66,4 @@ app.get('/json', (req, res) => {
 
 // ---------- DO NOT EDIT BELOW THIS LINE --------------------
 
-module.exports = app
+module.exports = app;
